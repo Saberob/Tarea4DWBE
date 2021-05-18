@@ -21,6 +21,7 @@ namespace RFID.Models
 
         public virtual DbSet<Empleado> Empleado { get; set; }
         public virtual DbSet<Ingresos> Ingresos { get; set; }
+        public virtual DbSet<Usuarios> Usuarios { get; set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
@@ -73,6 +74,29 @@ namespace RFID.Models
                     .HasForeignKey(d => d.EmpleadoId)
                     .HasConstraintName("FK__ingresos__emplea__2A4B4B5E");
             });
+
+            modelBuilder.Entity<Usuarios>(entity =>
+            {
+                entity.Property(e => e.usuarioId)
+                     .HasColumnName("usuarioId")
+                     .ValueGeneratedOnAdd();
+
+                entity.Property(e => e.userName)
+                    .HasColumnName("usuario")
+                    .HasMaxLength(50)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.password)
+                    .HasColumnName("Clave")
+                    .HasMaxLength(500)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.sal)
+                   .HasColumnName("sal")
+                   .HasMaxLength(500)
+                   .IsUnicode(false);
+            });
+
 
             OnModelCreatingPartial(modelBuilder);
         }

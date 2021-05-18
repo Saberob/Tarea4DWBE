@@ -21,6 +21,13 @@ on delete cascade
 );
 go
 
+CREATE TABLE Usuarios(
+usuarioId int identity(1,1) primary key,
+usuario varchar(50) unique not null,
+clave varchar(500) NOT NULL,
+sal varchar(500) not null
+);
+
 --Insertar las dos tarjetas RFID
 insert into Empleado values ('Mario Alberto','Rodriguez','Valenzuela', 'A9890DE9');
 insert into Empleado values ('Giovanni','Alonso','Figueroa','8EB92AD9');
