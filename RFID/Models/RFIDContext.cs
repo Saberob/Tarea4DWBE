@@ -95,6 +95,7 @@ namespace RFID.Models
                    .HasColumnName("sal")
                    .HasMaxLength(500)
                    .IsUnicode(false);
+
             });
 
 

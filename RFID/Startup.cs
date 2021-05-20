@@ -1,4 +1,5 @@
 using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
@@ -9,6 +10,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.IdentityModel.Tokens;
+using RFID.Helper;
 using RFID.Models;
 using System;
 using System.Text;
@@ -29,7 +31,19 @@ namespace RFID
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddDbContext<RFIDContext>(options => options.UseSqlServer(Configuration.GetConnectionString("RFID")));
+            
             services.AddControllersWithViews();
+
+            services.AddCors(options =>
+            {
+                options.AddPolicy(name: _Cors, builder =>
+                {
+                    builder.SetIsOriginAllowedToAllowWildcardSubdomains()
+                        .AllowAnyOrigin()
+                        .AllowAnyHeader()
+                        .AllowAnyMethod();
+                });
+            });
             // In production, the Angular files will be served from this directory
             var key = Encoding.ASCII.GetBytes(Configuration.GetValue<string>("SecretKey"));
             services.AddAuthentication(x =>
@@ -48,18 +62,17 @@ namespace RFID
                     ValidateAudience = false
                 };
             });
+
+            services.AddHttpContextAccessor();
+
+            services.AddTransient<IAuthorizationHandler, UserTokenHandler>();
+
             services.Configure<ApiBehaviorOptions>(options =>
             {
                 options.SuppressModelStateInvalidFilter = true;
             });
 
-            services.AddCors(options =>
-            {
-                options.AddPolicy(name: _Cors, builder =>
-                {
-                    builder.AllowAnyOrigin().AllowAnyHeader().AllowAnyMethod();
-                });
-            });
+            
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

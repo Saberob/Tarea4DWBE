@@ -13,9 +13,9 @@ using RFID.Models.Views;
 
 namespace RFID.Controllers
 {
+    [Authorize]
     [Route("api/[controller]")]
     [ApiController]
-    [Authorize]
     public class IngresosController : Controller
     {
         private readonly RFIDContext context;
@@ -40,16 +40,6 @@ namespace RFID.Controllers
             return ingresos;
         }
 
-        // GET: Ingresos/id
-        [HttpGet("{id}")]
-        public async Task<IActionResult> GetIngresosbyId(int id)
-        {
-            var ingreso = await context.Ingresos.FirstOrDefaultAsync(m => m.RegistroId == id);
-            if (ingreso == null) {
-                return NotFound(ErrorHelper.Response(404, "No existe ese id"));
-            }
-            return Ok(ingreso);
-        }
 
         [HttpGet("byEmp/{id}")]
         public async Task<IActionResult> GetIngresobyEmpleado(int id)
@@ -81,36 +71,6 @@ namespace RFID.Controllers
             });
         }
 
-        [HttpGet("byDay/{month}/{day}/{year}")]
-        public async Task<IActionResult> GetIngresosbyDay(int month, int day, int year)
-        {
-            var Fecha = month.ToString() + "/" + day.ToString() + "/" + year.ToString();
-
-            var ingresos = await context.Ingresos.Join(context.Empleado, ing => ing.EmpleadoId, emp => emp.Id, (ing,emp) => new IngresoWNameVM { 
-                RegistroId = ing.RegistroId,
-                Nombre = emp.Nombre + " "+ emp.ApellidoP + " " + emp.ApellidoM,
-                Fecha = ing.Fecha.Month.ToString() + "/" + ing.Fecha.Day.ToString() + "/" + ing.Fecha.Year.ToString(),
-                Hora = ing.Fecha.ToShortTimeString()
-            }).ToListAsync();
-
-            var ingresosByDay = new List<IngresoWNameVM>();
-            
-            foreach (IngresoWNameVM item in ingresos)
-            {
-                if (item.Fecha == Fecha)
-                {
-                    ingresosByDay.Add(item);
-                }
-            }
-
-            if(ingresosByDay == null)
-            {
-                return NotFound(ErrorHelper.Response(404, "No hay registros con esa fecha"));
-            }
-
-            return Ok(ingresosByDay);
-        }
-
         // POST: Ingresos
         [HttpPost]
         public async Task<IActionResult> RegistrarIngreso([Bind("EmpleadoId")] Ingresos ingreso)
@@ -137,6 +97,40 @@ namespace RFID.Controllers
             }
 
             context.Ingresos.Remove(ingreso);
+            await context.SaveChangesAsync();
+            return NoContent();
+        }
+
+	    [HttpPut]
+        public async Task<IActionResult> Put([Bind("RegistroId, EmpleadoId, day, month, year, hours, minutes, seconds")]UpIngresoVM ingreso)
+        {
+            if(!await context.Ingresos.Where(s => s.RegistroId == ingreso.RegistroId).AsNoTracking().AnyAsync())
+            {
+                return NotFound(ErrorHelper.Response(404, "el ingreso a modificar no fue encontrado"));
+            }
+            if(!await context.Empleado.Where(s => s.Id == ingreso.EmpleadoId).AsNoTracking().AnyAsync())
+            {
+                return BadRequest(ErrorHelper.Response(400, "el empleado a modificar no fue encontrado"));
+            }
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ErrorHelper.GetModelStateErrors(ModelState));
+            }
+
+            var fechaIngreso = new DateTime();
+
+            try
+            {
+                fechaIngreso = new DateTime(ingreso.year, ingreso.month, ingreso.day, ingreso.hours, ingreso.minutes, ingreso.seconds);
+            }
+            catch(Exception)
+            {
+                return BadRequest(ErrorHelper.Response(400, "La fecha u hora de ingreso no es valida"));
+            }
+
+            var newIngreso = new Ingresos(ingreso.RegistroId, ingreso.EmpleadoId, fechaIngreso);
+
+            context.Entry(newIngreso).State = EntityState.Modified;
             await context.SaveChangesAsync();
             return NoContent();
         }

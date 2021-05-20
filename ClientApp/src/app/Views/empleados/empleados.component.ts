@@ -15,6 +15,7 @@ import { ApiRestService } from 'src/app/Services/api-rest.service';
   styleUrls: ['./empleados.component.css']
 })
 export class EmpleadosComponent implements OnInit {
+  newEmpleado = false;
 
   displayedColumns: string[] = ['id', 'nombre', 'apellidoP', 'apellidoM', 'actions'];
   dataSource = new MatTableDataSource<Empleado>();
@@ -25,16 +26,16 @@ export class EmpleadosComponent implements OnInit {
   @ViewChild(MatSort) sort!: MatSort;
 
   constructor(private fb: FormBuilder,private router: Router,private api:ApiRestService, private _snackBar: MatSnackBar) { 
-    this.getEmpleados();
-  }
-
-  ngOnInit(): void {
     this.form = this.fb.group({
       Nombre: new FormControl('', Validators.required),
       ApellidoP: new FormControl('', Validators.required),
       ApellidoM: new FormControl('', Validators.required),
       Rfid: new FormControl('', [Validators.required, Validators.minLength(10), Validators.maxLength(50)])
     });
+  }
+
+  ngOnInit(): void {
+    this.getEmpleados();
   }
 
   getEmpleados(){
@@ -59,22 +60,22 @@ export class EmpleadosComponent implements OnInit {
   }
 
   deleteEmpleado(id: number): void{
-    console.log(id)
-    if(confirm("¿Esta seguro de eliminar al empleado?")){
+    let res = confirm("¿Esta seguro de eliminar al empleado?");
+
+    if(res){
       this.api.deleteEmpleado(id).subscribe(data => {
         console.log(data)
       })
-
-      this.router.navigateByUrl('/Empleados');
 
       this._snackBar.open('El empleado a sido eliminado', '', {
         duration: 1500,
         horizontalPosition: 'center',
         verticalPosition: 'bottom'
       })
+      this.ngOnInit();
     }
     else{
-      this.router.navigateByUrl('/Empleados');
+      this.ngOnInit();
     }
   }
 
@@ -90,13 +91,14 @@ export class EmpleadosComponent implements OnInit {
       console.log(data);
     });
 
-    this.router.navigateByUrl('/Empleados');
-
     this._snackBar.open('El empleado a sido agregado', '', {
       duration: 1500,
       horizontalPosition: 'center', 
       verticalPosition: 'bottom'
     })
+
+    this.newEmpleado = false;
+    this.ngOnInit();
   }
 
 }

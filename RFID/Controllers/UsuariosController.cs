@@ -21,7 +21,18 @@ namespace RFID.Controllers
             context = _context;
         }
 
-        // POST api/<ValuesController>
+        [HttpGet("{id}")]
+        public async Task<IActionResult> Get(int id)
+        {
+            UsuarioVM usuarios = await context.Usuarios.Where(x => x.usuarioId == id).Select(x => new UsuarioVM()
+            {
+                usuarioId = x.usuarioId,
+                userName = x.userName
+            }).SingleOrDefaultAsync();
+
+            return Ok(usuarios);
+        }
+
         [HttpPost]
         public async Task<IActionResult> Post(Usuarios usuario)
         {
@@ -29,8 +40,8 @@ namespace RFID.Controllers
             {
                 return BadRequest(ErrorHelper.GetModelStateErrors(ModelState));
             }
-            
-            if(await context.Usuarios.Where(x => x.userName == usuario.userName).AnyAsync())
+
+            if (await context.Usuarios.Where(x => x.userName == usuario.userName).AnyAsync())
             {
                 return BadRequest(ErrorHelper.Response(400, "el usaurio {usuario.userName} ya existe."));
             }
@@ -40,7 +51,7 @@ namespace RFID.Controllers
             usuario.sal = Password.Salt;
             context.Usuarios.Add(usuario);
             await context.SaveChangesAsync();
-            return Ok(new UsuarioVM()
+            return CreatedAtAction(nameof(Get), new { id = usuario.usuarioId }, new UsuarioVM()
             {
                 usuarioId = usuario.usuarioId,
                 userName = usuario.userName

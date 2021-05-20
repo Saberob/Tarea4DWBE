@@ -4,9 +4,29 @@ html, body { height: 100%; }
 body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
 
 .container {
-    margin-left: 100px;
-    margin-right: 100px;
-    margin-top: 5px;
+    margin-top: 15px;
+    width: 80%;
+    float: left;
+}
+
+.container-short {
+    margin-top: 15px;
+    width: 60%;
+    float: left;
+}
+
+.spaceblock{
+    width: 10%;
+    float: left;
+}
+
+.spaceblock-short {
+    width: 20%;
+    float: left;
+}
+
+.centered-cube {
+    margin-top: auto;
 }
 
 table {
@@ -17,7 +37,7 @@ table {
 }
 
 th {
-    width: 20%;
+    width: auto;
 }
 
 .mat-form-field {

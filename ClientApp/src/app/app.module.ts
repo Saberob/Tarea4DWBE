@@ -22,9 +22,12 @@ import { AppComponent } from './app.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { NavbarComponent } from './navbar/navbar.component';
 import { IngresosComponent } from './Views/ingresos/ingresos.component';
-import { HttpClientModule } from '@angular/common/http';
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { EmpleadosComponent } from './Views/empleados/empleados.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { LoginComponent } from './Views/login/login.component';
+import { CookieService } from 'ngx-cookie-service';
+import { JwtInterceptor } from './Interceptor/jwt-interceptor.interceptor';
 
 
 @NgModule({
@@ -32,7 +35,8 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
     AppComponent,
     NavbarComponent,
     IngresosComponent,
-    EmpleadosComponent
+    EmpleadosComponent,
+    LoginComponent
   ],
   imports: [
     BrowserModule,
@@ -59,6 +63,12 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
   ],
   providers: [
     MatDatepickerModule,
+    CookieService,
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: JwtInterceptor,
+      multi: true
+    }
   ],
   bootstrap: [AppComponent]
 })

@@ -1,0 +1,104 @@
+<div class="spaceblock">
+    <br>
+</div>
+
+<div class="container">
+    <div *ngIf="!this.newIngreso">
+        <mat-toolbar class="mat-elevation-z8" color="primary">
+            <span>Ingresos</span>
+            <a class="spacer"></a>
+            <a mat-raised-button color="accent" (click)="this.newIngreso = true">Agregar</a>
+        </mat-toolbar>
+
+        <div *ngIf="ingresos.length > 0" class="mat-elevation-z8" style="margin-top: 10px;">
+            <mat-form-field appearance="fill">
+                <mat-label>Escoja una fecha o ingrese algun dato que quiera encontrar</mat-label>
+                <input matInput [matDatepicker]="picker" (keyup)="applyFilter($event)" #input>
+                <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                <mat-datepicker #picker></mat-datepicker>
+            </mat-form-field>
+            <div class="mat-elevation-z8">
+                <table mat-table [dataSource]="dataSource" matSort>
+
+                    <!-- Position Column -->
+                    <ng-container matColumnDef="id">
+                        <th mat-header-cell *matHeaderCellDef> Id </th>
+                        <td mat-cell *matCellDef="let element"> {{element.registroId}} </td>
+                    </ng-container>
+
+                    <!-- Name Column -->
+                    <ng-container matColumnDef="nombre">
+                        <th mat-header-cell *matHeaderCellDef mat-sort-header> Nombre </th>
+                        <td mat-cell *matCellDef="let element"> {{element.nombre}} </td>
+                    </ng-container>
+
+                    <!-- Weight Column -->
+                    <ng-container matColumnDef="fecha">
+                        <th mat-header-cell *matHeaderCellDef mat-sort-header> Fecha </th>
+                        <td mat-cell *matCellDef="let element"> {{element.fecha}} </td>
+                    </ng-container>
+
+                    <!-- Symbol Column -->
+                    <ng-container matColumnDef="hora">
+                        <th mat-header-cell *matHeaderCellDef mat-sort-header> Hora </th>
+                        <td mat-cell *matCellDef="let element"> {{element.hora}} </td>
+                    </ng-container>
+
+                    <ng-container matColumnDef="actions">
+                        <th mat-header-cell *matHeaderCellDef></th>
+                        <td mat-cell *matCellDef="let element" style="text-align: right;">
+                            <a class="pointer" (click)="deleteIngreso(element.registroId)" style="color: #e15639;"
+                                matTooltip="Eliminar Usuario">
+                                <mat-icon>delete</mat-icon>
+                            </a>
+                        </td>
+                    </ng-container>
+
+                    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+                    <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+
+                    <tr class="mat-row" *matNoDataRow>
+                        <td class="mat-cell" colspan="4">No hay datos que contengan:  "{{input.value}}"</td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+        <h2 *ngIf="empleados.length == 0">No hay registros de ingresos para mostrar</h2>
+    </div>
+
+    <div class="mat-elevation-z8" *ngIf="this.newIngreso">
+        <mat-toolbar color="primary">
+            <span>Agregar Ingreso</span>
+        </mat-toolbar>
+
+        <mat-card style="margin-top: 10px;">
+
+            <form [formGroup]="form" (ngSubmit)="agregarIngreso()">
+                <mat-grid-list cols="4" rowHeight="70px">
+                    <mat-grid-tile [colspan]="4" [rowspan]="1" [style.background]="'lightblue'">
+                        Ingrese el id del empleado que va a ingresar
+                    </mat-grid-tile>
+                    <mat-grid-tile [colspan]="2" [rowspan]="2"></mat-grid-tile>
+                    <mat-grid-tile [colspan]="2" [rowspan]="1" style="width: 30px;">
+                        <mat-form-field>
+                            <mat-label>Empleado</mat-label>
+                            <mat-select formControlName="EmpId">
+                                <mat-option *ngFor="let item of this.empleados" [value]="item.id">
+                                    {{ item.id }}
+                                </mat-option>
+                            </mat-select>
+                        </mat-form-field>
+                    </mat-grid-tile>
+
+                    <mat-grid-tile [colspan]="2" [rowspan]="1">
+                        <button mat-raised-button (click)="this.newIngreso = false">Volver</button>
+                        <button type="submit" [disabled]="form.invalid" mat-raised-button color="primary">
+                            Aceptar
+                        </button>
+                    </mat-grid-tile>
+                </mat-grid-list>
+
+            </form>
+        </mat-card>
+    </div>
+</div>

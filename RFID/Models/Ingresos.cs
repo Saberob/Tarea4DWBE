@@ -10,6 +10,16 @@ namespace RFID.Models
 {
     public partial class Ingresos
     {
+        public Ingresos()
+        {
+        }
+        public Ingresos(int _registroId, int _empleadoId, DateTime _fecha)
+        {
+            this.RegistroId = _registroId;
+            this.EmpleadoId = _empleadoId;
+            this.Fecha = _fecha;
+        }
+
         [Key]
         public int RegistroId { get; set; }
         [Required(ErrorMessage="El Id del empleado es obligatorio")]

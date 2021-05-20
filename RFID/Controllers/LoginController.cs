@@ -11,6 +11,8 @@ using System.Linq;
 using System.Security.Claims;
 using System.Text;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
+using RFID.Models.ViewModels;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
@@ -29,7 +31,8 @@ namespace ExamenDWBE.Controllers
             configuration = _configuration;
         }
 
-        // POST api/<ValuesController>
+        // POST api/login
+        [AllowAnonymous]
         [HttpPost]
         public async Task<IActionResult> Post(Login value)
         {
@@ -62,12 +65,16 @@ namespace ExamenDWBE.Controllers
                 var tokenHandler = new JwtSecurityTokenHandler();
                 var createdToken = tokenHandler.CreateToken(tokenDescriptor);
                 string bearer_Token = tokenHandler.WriteToken(createdToken);
-                return Ok(bearer_Token);
+                return Ok(new tokenVM{
+                    token = bearer_Token
+                });
             }
             else
             {
                 return Forbid();
             }
         }
+
+      
     }
 }

@@ -1,0 +1,367 @@
+{
+	"info": {
+		"_postman_id": "1558f4da-2cb1-49fe-924a-17f9aeb2e62c",
+		"name": "PIADWBE",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Get Empleados",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://localhost:5001/api/empleado",
+					"protocol": "https",
+					"host": [
+						"localhost"
+					],
+					"port": "5001",
+					"path": [
+						"api",
+						"empleado"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "POST Empleado",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"Nombre\": \"Alberto\",\r\n    \"ApellidoP\": \"Sanchez\",\r\n    \"ApellidoM\": \"Robles\",\r\n    \"RFID\": \"DWBE1861608\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://localhost:5001/api/empleadoes",
+					"protocol": "https",
+					"host": [
+						"localhost"
+					],
+					"port": "5001",
+					"path": [
+						"api",
+						"empleadoes"
+					]
+				},
+				"description": "Insertar empleado en la base de datos"
+			},
+			"response": []
+		},
+		{
+			"name": "Delete Empleado",
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "https://localhost:5001/api/empleado/22",
+					"protocol": "https",
+					"host": [
+						"localhost"
+					],
+					"port": "5001",
+					"path": [
+						"api",
+						"empleado",
+						"22"
+					]
+				},
+				"description": "Insertar empleado en la base de datos"
+			},
+			"response": []
+		},
+		{
+			"name": "Update Empleado",
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"Id\": 23,\r\n    \"Nombre\": \"Alberto Natanael\",\r\n    \"ApellidoP\": \"Sanchez Juarez\",\r\n    \"ApellidoM\": \"Robles\",\r\n    \"RFID\": \"DWBE18616081\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://localhost:5001/api/empleado/23",
+					"protocol": "https",
+					"host": [
+						"localhost"
+					],
+					"port": "5001",
+					"path": [
+						"api",
+						"empleado",
+						"23"
+					]
+				},
+				"description": "Insertar empleado en la base de datos"
+			},
+			"response": []
+		},
+		{
+			"name": "Get Ingresos",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "https://localhost:5001/api/ingresos",
+					"protocol": "https",
+					"host": [
+						"localhost"
+					],
+					"port": "5001",
+					"path": [
+						"api",
+						"ingresos"
+					]
+				},
+				"description": "Obtener todos los ingresos de cada empleado registrados"
+			},
+			"response": []
+		},
+		{
+			"name": "Get Ingresos by Id Empleado",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://localhost:5001/api/ingresos/byEmp/2",
+					"protocol": "https",
+					"host": [
+						"localhost"
+					],
+					"port": "5001",
+					"path": [
+						"api",
+						"ingresos",
+						"byEmp",
+						"2"
+					]
+				},
+				"description": "Obtener ingreso de un empleado mediante su id"
+			},
+			"response": []
+		},
+		{
+			"name": "Post Ingreso",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"EmpleadoId\": 2\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://localhost:5001/api/ingresos",
+					"protocol": "https",
+					"host": [
+						"localhost"
+					],
+					"port": "5001",
+					"path": [
+						"api",
+						"ingresos"
+					]
+				},
+				"description": "insertar un ingreso de un empleado solo ingresando el id el mismo"
+			},
+			"response": []
+		},
+		{
+			"name": "Delete Ingreso",
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"Nombre\": \"Alberto\",\r\n    \"ApellidoP\": \"Sanchez\",\r\n    \"ApellidoM\": \"Robles\",\r\n    \"RFID\": \"DWBE1861608\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://localhost:5001/api/ingresos/29",
+					"protocol": "https",
+					"host": [
+						"localhost"
+					],
+					"port": "5001",
+					"path": [
+						"api",
+						"ingresos",
+						"29"
+					]
+				},
+				"description": "Insertar empleado en la base de datos"
+			},
+			"response": []
+		},
+		{
+			"name": "Update Ingreso",
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"RegistroId\": 1,\r\n    \"EmpleadoId\": 1,\r\n    \"day\": 28,\r\n    \"month\": 2,\r\n    \"year\": 2021,\r\n    \"hours\": 16,\r\n    \"minutes\": 45,\r\n    \"seconds\": 12\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://localhost:5001/api/ingresos",
+					"protocol": "https",
+					"host": [
+						"localhost"
+					],
+					"port": "5001",
+					"path": [
+						"api",
+						"ingresos"
+					]
+				},
+				"description": "Insertar empleado en la base de datos"
+			},
+			"response": []
+		},
+		{
+			"name": "Post Usuario",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"UserName\": \"Alberto\",\r\n    \"password\": \"admin\",\r\n    \"confirmPassword\": \"admin\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://localhost:5001/api/usuarios",
+					"protocol": "https",
+					"host": [
+						"localhost"
+					],
+					"port": "5001",
+					"path": [
+						"api",
+						"usuarios"
+					]
+				},
+				"description": "Para insertar un nuevo usuario para la autenticacion"
+			},
+			"response": []
+		},
+		{
+			"name": "Login",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "X-Token",
+						"value": "2p35nwdTUkGcD4onTZOPiA==",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"UserName\": \"Alberto\",\r\n    \"password\": \"admin\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:9090/api/login",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "9090",
+					"path": [
+						"api",
+						"login"
+					]
+				},
+				"description": "Hacer login para autorizar las llamadas hacia empleados e ingresos"
+			},
+			"response": []
+		}
+	],
+	"auth": {
+		"type": "bearer",
+		"bearer": [
+			{
+				"key": "token",
+				"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1laWQiOiJBbGJlcnRvIiwibmJmIjoxNjIxNTI4NjgwLCJleHAiOjE2MjE1NDMwODAsImlhdCI6MTYyMTUyODY4MH0.kyVG_1ARNggJFDIl2hzbINn7bs6AYkI2-wHt6cxr6Z8",
+				"type": "string"
+			}
+		]
+	},
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	]
+}

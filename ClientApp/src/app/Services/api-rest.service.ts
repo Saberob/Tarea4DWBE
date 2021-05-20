@@ -5,6 +5,8 @@ import { Empleado } from '../interfaces/empleado';
 import { EmpleadoSubmit, EmpleadoSubmitWI } from '../interfaces/empleadoSubmit';
 import { Ingreso } from '../interfaces/ingresos';
 import { IngresoSubmit, IngresoSubmitW } from '../interfaces/ingresoSubmit';
+import { Token } from '../interfaces/login';
+import { Login, NewUser } from '../interfaces/user';
 
 @Injectable({
   providedIn: 'root'
@@ -13,6 +15,16 @@ export class ApiRestService {
   url: string = "https://localhost:5001/api"
 
   constructor(private http: HttpClient) { }
+
+  login(user: Login): Observable<Token>{
+    let dir = this.url + "/login"
+    return this.http.post<Token>(dir, user);
+  }
+
+  postUser(newUser: NewUser): Observable<Token>{
+    let dir = this.url + "/usuarios"
+    return this.http.post<Token>(dir, newUser);
+  }
 
   getEmpleados(): Observable<Empleado[]> {
     let dir = this.url + "/empleado"

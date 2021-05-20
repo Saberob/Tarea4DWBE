@@ -12,9 +12,9 @@ using RFID.Models.Views;
 
 namespace RFID.Controllers
 {
-    [Route("api/[controller]")]
-    [ApiController]
     [Authorize]
+    [Route("api/[controller]")]
+    [ApiController]    
     public class EmpleadoController : Controller
     {
         private readonly RFIDContext context;
@@ -26,13 +26,6 @@ namespace RFID.Controllers
 
         // GET: api/Empleado
         [HttpGet]
-        public async Task<IEnumerable<Empleado>> GetEmpleados()
-        {
-            return await context.Empleado.ToListAsync();
-        }
-
-        // GET: api/Empleado/WOR
-        [HttpGet("WOR")]
         public async Task<IEnumerable<EmpleadoVM>> GetEmpleadosWORfid()
         {
             return await context.Empleado.Select(s => new EmpleadoVM
@@ -42,38 +35,6 @@ namespace RFID.Controllers
                 ApellidoP = s.ApellidoP,
                 ApellidoM = s.ApellidoM
             }).ToListAsync();
-        }
-
-        // GET: api/Empleado/id
-        [HttpGet("{id}")]
-        public async Task<IActionResult> GetEmpleadobyid(int id)
-        {
-            var empleado = await context.Empleado.FirstOrDefaultAsync(m => m.Id == id);
-            if (empleado == null)
-            {
-                return NotFound(ErrorHelper.Response(404, "No existe ese id de empleado"));
-            }
-
-            return Ok(empleado);
-        }
-
-        // GET: api/Empleado/byRfid/rfid
-        [HttpGet("byRfid/{rfid}")]
-        public async Task<IActionResult> GetEmpleadobyRfid(string rfid)
-        {
-            var empleado = await context.Empleado.FirstOrDefaultAsync(m => m.Rfid == rfid);
-            if (empleado == null)
-            {
-                return NotFound(ErrorHelper.Response(404, "No existe ese rfid de empleado"));
-            }
-
-            return Ok(new EmpleadoVM
-            {
-                Id = empleado.Id,
-                Nombre = empleado.Nombre,
-                ApellidoP = empleado.ApellidoP,
-                ApellidoM = empleado.ApellidoM
-            });
         }
 
         [HttpPost]
@@ -104,6 +65,27 @@ namespace RFID.Controllers
             }
 
             context.Empleado.Remove(empleado);
+            await context.SaveChangesAsync();
+            return NoContent();
+        }
+
+	    [HttpPut("{id}")]
+        public async Task<IActionResult> Put(int id, [Bind("Id, Nombre, ApellidoP, ApellidoM, Rfid")]Empleado empleado)
+        {
+            if(!await context.Empleado.Where(s => s.Id == empleado.Id).AsNoTracking().AnyAsync())
+            {
+                return NotFound(ErrorHelper.Response(404, "el empleado a modificar no fue encontrado"));
+            }
+            if(await context.Empleado.Where(s => s.Rfid == empleado.Rfid && s.Id != empleado.Id).AnyAsync())
+            {
+                return BadRequest(ErrorHelper.Response(400, "el RFID ya existe"));
+            }
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ErrorHelper.GetModelStateErrors(ModelState));
+            }
+
+            context.Entry(empleado).State = EntityState.Modified;
             await context.SaveChangesAsync();
             return NoContent();
         }

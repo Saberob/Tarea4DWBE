@@ -1,0 +1,90 @@
+<div class="spaceblock-short">
+    <br>
+</div>
+<div class="container-short">
+    <div class="mat-elevation-z8" *ngIf="!this.newUser">
+        <mat-toolbar color="primary">
+            <span>Iniciar sesion</span>
+        </mat-toolbar>
+
+        <mat-card>
+            <form [formGroup]="login" (ngSubmit)="beginSession()">
+                <mat-grid-list cols="3" rowHeight="70px">
+                    <mat-grid-tile [colspan]="3" [rowspan]="1" [style.background]="'gray'">
+                        Ingrese los datos siguientes
+                    </mat-grid-tile>
+                    <mat-grid-tile [colspan]="3" [rowspan]="1">
+                        <mat-form-field class="ancho">
+                            <mat-label>Nombre de usuario</mat-label>
+                            <input matInput autocomplete="off" formControlName="username">
+                        </mat-form-field>
+                    </mat-grid-tile>
+                    <mat-grid-tile [colspan]="3" [rowspan]="1">
+                        <mat-form-field>
+                            <mat-label>Contraseña</mat-label>
+                            <input matInput [type]="hide ? 'password' : 'text'" formControlName="password">
+                            <button mat-icon-button matSuffix (click)="hide = !hide" [attr.aria-label]="'Ocultar contraseña'" [attr.aria-pressed]="hide">
+                                <mat-icon>{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
+                            </button>
+                        </mat-form-field>
+                    </mat-grid-tile>
+                    <mat-grid-tile [colspan]="3" [rowspan]="1">
+                        <button mat-button (click)="this.newUser = true" color="primary">Agregar Usuario</button>
+                        <button routerLinkActive="router-link-active" type="submit" [disabled]="login.invalid" mat-raised-button
+                            color="primary">Entrar</button>
+                    </mat-grid-tile>
+                </mat-grid-list>
+
+            </form>
+
+        </mat-card>
+    </div>
+
+    <div class="mat-elevation-z8" *ngIf="this.newUser">
+        <mat-toolbar color="primary">
+            <span>Nuevo Usuario</span>
+        </mat-toolbar>
+
+        <mat-card>
+            <form [formGroup]="newUserForm" (ngSubmit)="postNewUser()">
+                <mat-grid-list cols="3" rowHeight="70px">
+                    <mat-grid-tile [colspan]="3" [rowspan]="1" [style.background]="'gray'">
+                        Ingrese los datos siguientes
+                    </mat-grid-tile>
+
+                    <mat-grid-tile [colspan]="3" [rowspan]="1">
+                        <mat-form-field class="ancho">
+                            <mat-label>Nombre de usuario</mat-label>
+                            <input matInput autocomplete="off" formControlName="username">
+                        </mat-form-field>
+                    </mat-grid-tile>
+                    <mat-grid-tile [colspan]="3" [rowspan]="1">
+                        <mat-form-field>
+                            <mat-label>Contraseña</mat-label>
+                            <input matInput [type]="hide ? 'password' : 'text'" formControlName="password">
+                            <button mat-icon-button matSuffix (click)="hide = !hide" [attr.aria-label]="'Ocultad contraseña'" [attr.aria-pressed]="hide">
+                                <mat-icon>{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
+                            </button>
+                        </mat-form-field>
+                    </mat-grid-tile>
+                    <mat-grid-tile [colspan]="3" [rowspan]="1">
+                        <mat-form-field>
+                            <mat-label>Confirmar contraseña</mat-label>
+                            <input matInput [type]="hideC ? 'password' : 'text'" formControlName="confirmPassword">
+                            <button mat-icon-button matSuffix (click)="hideC = !hideC" [attr.aria-label]="'Ocultad contraseña'" [attr.aria-pressed]="hideC">
+                                <mat-icon>{{hideC ? 'visibility_off' : 'visibility'}}</mat-icon>
+                            </button>
+                        </mat-form-field>
+                    </mat-grid-tile>
+                    <mat-grid-tile [colspan]="3" [rowspan]="1">
+                        <button mat-button (click)="this.newUser = false" color="primary">Volver</button>
+                        <button routerLinkActive="router-link-active" type="submit" [disabled]="newUserForm.invalid" mat-raised-button
+                            color="primary">Registrar</button>
+                    </mat-grid-tile>
+                </mat-grid-list>
+
+            </form>
+
+        </mat-card>
+    </div>
+</div>
