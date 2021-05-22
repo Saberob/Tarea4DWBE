@@ -65,8 +65,6 @@ namespace RFID
 
             services.AddHttpContextAccessor();
 
-            services.AddTransient<IAuthorizationHandler, UserTokenHandler>();
-
             services.Configure<ApiBehaviorOptions>(options =>
             {
                 options.SuppressModelStateInvalidFilter = true;

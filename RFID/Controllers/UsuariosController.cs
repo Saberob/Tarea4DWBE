@@ -7,6 +7,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 
 namespace RFID.Controllers
 {
@@ -22,7 +23,7 @@ namespace RFID.Controllers
         }
 
         [HttpGet("{id}")]
-        public async Task<IActionResult> Get(int id)
+        public async Task<IActionResult> GetById(int id)
         {
             UsuarioVM usuarios = await context.Usuarios.Where(x => x.usuarioId == id).Select(x => new UsuarioVM()
             {
@@ -49,13 +50,12 @@ namespace RFID.Controllers
             HashedPassword Password = HashHelper.Hash(usuario.password);
             usuario.password = Password.Password;
             usuario.sal = Password.Salt;
+
             context.Usuarios.Add(usuario);
             await context.SaveChangesAsync();
-            return CreatedAtAction(nameof(Get), new { id = usuario.usuarioId }, new UsuarioVM()
-            {
-                usuarioId = usuario.usuarioId,
-                userName = usuario.userName
-            });
+            return NoContent();
         }
+
+        
     }
 }

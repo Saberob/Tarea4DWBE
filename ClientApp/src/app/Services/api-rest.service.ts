@@ -1,10 +1,8 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import { Empleado } from '../interfaces/empleado';
-import { EmpleadoSubmit, EmpleadoSubmitWI } from '../interfaces/empleadoSubmit';
-import { Ingreso } from '../interfaces/ingresos';
-import { IngresoSubmit, IngresoSubmitW } from '../interfaces/ingresoSubmit';
+import { Empleado, EmpleadoSubmit, EmpleadoSubmitWI } from '../interfaces/empleado';
+import { Ingreso, IngresoSubmit, IngresoSubmitW } from '../interfaces/ingresos';
 import { Token } from '../interfaces/login';
 import { Login, NewUser } from '../interfaces/user';
 
@@ -31,14 +29,14 @@ export class ApiRestService {
     return this.http.get<Empleado[]>(dir);
   }
 
-  getEmpleadoById(id: number): Observable<EmpleadoSubmitWI> {
-    let dir = this.url + "/empleado/" + id.toString();
-    return this.http.get<EmpleadoSubmitWI>(dir);
-  }
-
   postEmpleado(data: EmpleadoSubmit): Observable<any> {
     let dir = this.url + "/empleado"
     return this.http.post<any>(dir, data);
+  }
+
+  modifyEmpleado(data: EmpleadoSubmitWI): Observable<any> {
+    let dir = this.url + "/empleado/" + data.Id.toString()
+    return this.http.put<any>(dir, data);
   }
 
   deleteEmpleado(id: number): Observable<any> {                    
@@ -60,6 +58,11 @@ export class ApiRestService {
   postIngreso(data: IngresoSubmit): Observable<any> {
     let dir = this.url + "/ingresos"
     return this.http.post<any>(dir, data);
+  }
+
+  modifyIngreso(data: IngresoSubmitW): Observable<any> {
+    let dir = this.url + "/ingresos"
+    return this.http.put<any>(dir, data);
   }
 
   deleteIngreso(id: number): Observable<any> {

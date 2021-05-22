@@ -18,9 +18,7 @@ export class LoginComponent implements OnInit {
   login!: FormGroup;
   newUserForm!: FormGroup;
 
-  constructor(private snackBar: MatSnackBar,private router: Router,private api: ApiRestService, private fb: FormBuilder, private cookieService: CookieService) { }
-
-  ngOnInit(): void {
+  constructor(private snackBar: MatSnackBar,private router: Router,private api: ApiRestService, private fb: FormBuilder, private cookieService: CookieService) { 
     this.login = this.fb.group({
       username: new FormControl('', Validators.required),
       password: new FormControl('', Validators.required)
@@ -33,24 +31,32 @@ export class LoginComponent implements OnInit {
     });
   }
 
-  beginSession(): any {
-    const user: Login = {
-      username: this.login.value.username,
-      password: this.login.value.password
-    }
+  ngOnInit() {
+  }
 
-    this.api.login(user).subscribe( data => {
-      this.cookieService.set('token', data.token, 0.00347222222)
-      this.router.navigate(['/Ingresos'])
-    }, error => {
-      if(error.status == 404){
-        alert("El usuario no existe")
-      }else{
-        if(error.status == 403){
-          alert("El usuario o contraseña es incorrecto")
-        }
+  beginSession(): any {
+    if(!this.cookieService.check('token')){
+      const user: Login = {
+        username: this.login.value.username,
+        password: this.login.value.password
       }
-    });
+  
+      this.api.login(user).subscribe( data => {
+        this.cookieService.set('token', data.token, 0.020833333)
+        this.router.navigate(['/Ingresos']) 
+      }, error => {
+        if(error.status == 404){
+          alert("El usuario no existe")
+        }else{
+          if(error.status == 403){
+            alert("El usuario o contraseña es incorrecto")
+          }
+        }
+      });
+    }else{
+      alert("Ya hay una sesion iniciada, cierrela antes de inciar otra")
+      this.ngOnInit()
+    }
   }
 
   postNewUser(){

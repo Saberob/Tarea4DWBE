@@ -16,6 +16,7 @@ import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { MatCardModule } from '@angular/material/card';
 import { MatGridListModule } from '@angular/material/grid-list';
 import { MatSelectModule } from '@angular/material/select';
+import { NgxMaterialTimepickerModule } from 'ngx-material-timepicker';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -60,6 +61,7 @@ import { JwtInterceptor } from './Interceptor/jwt-interceptor.interceptor';
     FormsModule,
     ReactiveFormsModule,
     HttpClientModule,
+    NgxMaterialTimepickerModule
   ],
   providers: [
     MatDatepickerModule,

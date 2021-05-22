@@ -1,12 +1,10 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
-import { MatPaginator } from '@angular/material/paginator';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
 import { Router } from '@angular/router';
-import { Empleado } from 'src/app/interfaces/empleado';
-import { EmpleadoSubmit, EmpleadoSubmitWI } from 'src/app/interfaces/empleadoSubmit';
+import { Empleado, EmpleadoSubmit, EmpleadoSubmitWI  } from 'src/app/interfaces/empleado';
 import { ApiRestService } from 'src/app/Services/api-rest.service';
 
 @Component({
@@ -16,17 +14,28 @@ import { ApiRestService } from 'src/app/Services/api-rest.service';
 })
 export class EmpleadosComponent implements OnInit {
   newEmpleado = false;
+  modEmpleado = false;
+  EmpToMod!: number;
 
   displayedColumns: string[] = ['id', 'nombre', 'apellidoP', 'apellidoM', 'actions'];
   dataSource = new MatTableDataSource<Empleado>();
   empleados: Empleado[] = [];
-  form!: FormGroup;
+  empleadoToMod!: EmpleadoSubmitWI;
+  newEmp!: FormGroup;
+  modifiedEmp!: FormGroup;
 
-  @ViewChild(MatPaginator) paginator!: MatPaginator;
   @ViewChild(MatSort) sort!: MatSort;
 
   constructor(private fb: FormBuilder,private router: Router,private api:ApiRestService, private _snackBar: MatSnackBar) { 
-    this.form = this.fb.group({
+    this.newEmp = this.fb.group({
+      Nombre: new FormControl('', Validators.required),
+      ApellidoP: new FormControl('', Validators.required),
+      ApellidoM: new FormControl('', Validators.required),
+      Rfid: new FormControl('', [Validators.required, Validators.minLength(10), Validators.maxLength(50)])
+    });
+
+    this.modifiedEmp = this.fb.group({
+      Id: new FormControl('', Validators.required),
       Nombre: new FormControl('', Validators.required),
       ApellidoP: new FormControl('', Validators.required),
       ApellidoM: new FormControl('', Validators.required),
@@ -46,7 +55,6 @@ export class EmpleadosComponent implements OnInit {
   }
 
   ngAfterViewInit() {
-    this.dataSource.paginator = this.paginator;
     this.dataSource.sort = this.sort;
   }
 
@@ -79,12 +87,12 @@ export class EmpleadosComponent implements OnInit {
     }
   }
 
-  agregarEmpleado(){
+  addEmpleado(){
     const empleadoS: EmpleadoSubmit = {
-      Nombre: this.form.value.Nombre,
-      ApellidoP: this.form.value.ApellidoP,
-      ApellidoM: this.form.value.ApellidoM,
-      Rfid: this.form.value.Rfid
+      Nombre: this.newEmp.value.Nombre,
+      ApellidoP: this.newEmp.value.ApellidoP,
+      ApellidoM: this.newEmp.value.ApellidoM,
+      Rfid: this.newEmp.value.Rfid
     }
 
     this.api.postEmpleado(empleadoS).subscribe(data => {
@@ -101,4 +109,43 @@ export class EmpleadosComponent implements OnInit {
     this.ngOnInit();
   }
 
+  toModifyEmpleado(id: number){
+    this.modifiedEmp = this.fb.group({
+      Id: new FormControl(id, Validators.required),
+      Nombre: new FormControl(''),
+      ApellidoP: new FormControl(''),
+      ApellidoM: new FormControl(''),
+      Rfid: new FormControl('', [Validators.minLength(10),Validators.maxLength(50)])
+    });
+
+    this.modEmpleado = true;
+    this.EmpToMod = id;
+  }
+  
+  modifyEmpleado(){
+    const empleadoS: EmpleadoSubmitWI = {
+      Id: this.EmpToMod,
+      Nombre: this.modifiedEmp.value.Nombre,
+      ApellidoP: this.modifiedEmp.value.ApellidoP,
+      ApellidoM: this.modifiedEmp.value.ApellidoM,
+      Rfid: this.modifiedEmp.value.Rfid
+    }
+
+    this.api.modifyEmpleado(empleadoS).subscribe(data => {
+      console.log(data);
+    }, error => {
+      if(error.status == 400){
+        alert("El rfid ya esta registrado bajo otro empleado")
+      }
+    });
+
+    this._snackBar.open('El empleado a sido modificado', '', {
+      duration: 1500,
+      horizontalPosition: 'center', 
+      verticalPosition: 'bottom'
+    })
+
+    this.modEmpleado = false;
+    this.ngOnInit();
+  }
 }

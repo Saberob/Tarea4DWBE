@@ -80,9 +80,14 @@ namespace RFID.Controllers
             {
                 return BadRequest(ErrorHelper.Response(400, "el RFID ya existe"));
             }
-            if (!ModelState.IsValid)
+
+            if(empleado.Nombre == "" || empleado.ApellidoM == "" || empleado.ApellidoP == "" || empleado.Rfid == "") 
             {
-                return BadRequest(ErrorHelper.GetModelStateErrors(ModelState));
+                var empleadoAnterior = await context.Empleado.Where(w => w.Id == empleado.Id).AsNoTracking().FirstOrDefaultAsync();
+                if(empleado.Nombre == "") { empleado.Nombre = empleadoAnterior.Nombre; }
+                if(empleado.ApellidoP == "") { empleado.ApellidoP = empleadoAnterior.ApellidoP; }
+                if(empleado.ApellidoM == "") { empleado.ApellidoM = empleadoAnterior.ApellidoM; }
+                if(empleado.Rfid == "") { empleado.Rfid = empleadoAnterior.Rfid; }
             }
 
             context.Entry(empleado).State = EntityState.Modified;

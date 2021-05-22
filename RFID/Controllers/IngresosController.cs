@@ -40,37 +40,6 @@ namespace RFID.Controllers
             return ingresos;
         }
 
-
-        [HttpGet("byEmp/{id}")]
-        public async Task<IActionResult> GetIngresobyEmpleado(int id)
-        {
-            var empleado = await context.Empleado.FirstOrDefaultAsync(m => m.Id == id);
-            if (empleado == null)
-            {
-                return NotFound(ErrorHelper.Response(404, "No existe ese id de empleado"));
-            }
-
-            var request = await context.Ingresos.Where(x => x.EmpleadoId == empleado.Id).ToListAsync();
-            var ingresos = new List<IngresoVM>();
-
-            foreach(Ingresos item in request)
-            {
-                ingresos.Add(new IngresoVM
-                {
-                    RegistroId = item.RegistroId,
-                    Fecha = item.Fecha.Month.ToString() + "/" + item.Fecha.Day.ToString() + "/" + item.Fecha.Year.ToString(),
-                    Hora = item.Fecha.ToShortTimeString()
-                });
-            }
-
-            return Ok(new IngresoEmpleadoVM
-            {
-                EmpleadoId = id,
-                Nombre = empleado.Nombre + " "+ empleado.ApellidoP + " " + empleado.ApellidoM,
-                ingresos = ingresos
-            });
-        }
-
         // POST: Ingresos
         [HttpPost]
         public async Task<IActionResult> RegistrarIngreso([Bind("EmpleadoId")] Ingresos ingreso)
@@ -108,27 +77,54 @@ namespace RFID.Controllers
             {
                 return NotFound(ErrorHelper.Response(404, "el ingreso a modificar no fue encontrado"));
             }
+
             if(!await context.Empleado.Where(s => s.Id == ingreso.EmpleadoId).AsNoTracking().AnyAsync())
             {
                 return BadRequest(ErrorHelper.Response(400, "el empleado a modificar no fue encontrado"));
             }
-            if (!ModelState.IsValid)
-            {
-                return BadRequest(ErrorHelper.GetModelStateErrors(ModelState));
-            }
-
+            
             var fechaIngreso = new DateTime();
+            var newIngreso = new Ingresos();
 
-            try
+            if (ingreso.EmpleadoId == 0 || ingreso.day == 32 || ingreso.hours == 25)
             {
-                fechaIngreso = new DateTime(ingreso.year, ingreso.month, ingreso.day, ingreso.hours, ingreso.minutes, ingreso.seconds);
+                var ingresoAnterior = await context.Ingresos.Where(w => w.RegistroId == ingreso.RegistroId).AsNoTracking().FirstOrDefaultAsync();
+                if (ingreso.EmpleadoId == 0) { ingreso.EmpleadoId = ingresoAnterior.EmpleadoId; }
+                if ((ingreso.day == 32) && (ingreso.hours == 25))
+                {
+                    fechaIngreso = ingresoAnterior.Fecha;
+                }
+                else
+                {
+                    if (ingreso.day == 32)
+                    {
+                        fechaIngreso = new DateTime(ingresoAnterior.Fecha.Year, ingresoAnterior.Fecha.Month, ingresoAnterior.Fecha.Day, ingreso.hours, ingreso.minutes, ingreso.seconds);
+                    }
+                    else
+                    {
+                        if (ingreso.hours == 25)
+                        {
+                            fechaIngreso = new DateTime(ingreso.year, ingreso.month, ingreso.day, ingresoAnterior.Fecha.Hour, ingresoAnterior.Fecha.Minute, ingresoAnterior.Fecha.Second);
+                        }
+                    }
+                }
+                
+                newIngreso = new Ingresos(ingreso.RegistroId, ingreso.EmpleadoId, fechaIngreso);
             }
-            catch(Exception)
+            else
             {
-                return BadRequest(ErrorHelper.Response(400, "La fecha u hora de ingreso no es valida"));
-            }
+               try
+                {
+                    fechaIngreso = new DateTime(ingreso.year, ingreso.month, ingreso.day, ingreso.hours, ingreso.minutes, ingreso.seconds);
+                }
+                catch (Exception)
+                {
+                    return BadRequest(ErrorHelper.Response(400, "La fecha u hora de ingreso no es valida"));
+                }
 
-            var newIngreso = new Ingresos(ingreso.RegistroId, ingreso.EmpleadoId, fechaIngreso);
+                newIngreso = new Ingresos(ingreso.RegistroId, ingreso.EmpleadoId, fechaIngreso);
+                
+            }
 
             context.Entry(newIngreso).State = EntityState.Modified;
             await context.SaveChangesAsync();
