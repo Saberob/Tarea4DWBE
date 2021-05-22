@@ -25,7 +25,7 @@ namespace RFID.Controllers
             context = _context;
         }
 
-        // GET: Ingresos
+        // GET: /Ingresos
         [HttpGet]
         public async Task<IEnumerable<IngresoWNameVM>> GetIngresos()
         {
@@ -40,7 +40,7 @@ namespace RFID.Controllers
             return ingresos;
         }
 
-        // POST: Ingresos
+        // POST: /Ingresos
         [HttpPost]
         public async Task<IActionResult> RegistrarIngreso([Bind("EmpleadoId")] Ingresos ingreso)
         {
@@ -55,7 +55,7 @@ namespace RFID.Controllers
             return Created($"/ingresos/{ingreso.RegistroId}", ingreso);
         }
 
-        // POST: Ingresos
+        // DELETE: /Ingresos/1
         [HttpDelete("{id}")]
         public async Task<IActionResult> Delete(int id)
         {
@@ -70,7 +70,8 @@ namespace RFID.Controllers
             return NoContent();
         }
 
-	    [HttpPut]
+	// PUT: /Ingresos
+	[HttpPut]
         public async Task<IActionResult> Put([Bind("RegistroId, EmpleadoId, day, month, year, hours, minutes, seconds")]UpIngresoVM ingreso)
         {
             if(!await context.Ingresos.Where(s => s.RegistroId == ingreso.RegistroId).AsNoTracking().AnyAsync())

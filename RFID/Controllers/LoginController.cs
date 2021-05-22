@@ -31,7 +31,7 @@ namespace ExamenDWBE.Controllers
             configuration = _configuration;
         }
 
-        // POST api/login
+        // POST /login
         [AllowAnonymous]
         [HttpPost]
         public async Task<IActionResult> Post(Login value)

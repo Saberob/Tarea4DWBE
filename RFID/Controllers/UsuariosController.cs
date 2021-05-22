@@ -22,6 +22,7 @@ namespace RFID.Controllers
             context = _context;
         }
 
+	// GET: /usuarios/1
         [HttpGet("{id}")]
         public async Task<IActionResult> GetById(int id)
         {
@@ -34,6 +35,7 @@ namespace RFID.Controllers
             return Ok(usuarios);
         }
 
+	// POST: /usuarios
         [HttpPost]
         public async Task<IActionResult> Post(Usuarios usuario)
         {

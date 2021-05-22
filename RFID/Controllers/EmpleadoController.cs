@@ -24,7 +24,7 @@ namespace RFID.Controllers
             context = _context;
         }
 
-        // GET: api/Empleado
+        // GET: /Empleado
         [HttpGet]
         public async Task<IEnumerable<EmpleadoVM>> GetEmpleadosWORfid()
         {
@@ -37,6 +37,7 @@ namespace RFID.Controllers
             }).ToListAsync();
         }
 
+        // POST: /Empleado
         [HttpPost]
         public async Task<IActionResult> Post([Bind("Nombre, ApellidoP, ApellidoM, Rfid")] Empleado empleado)
         {
@@ -55,6 +56,7 @@ namespace RFID.Controllers
             return Created($"/empleado/{empleado.Id}", empleado);
         }
 
+        // DELETE: Empleado/1
         [HttpDelete("{id}")]
         public async Task<IActionResult> Delete(int id)
         {
@@ -69,6 +71,7 @@ namespace RFID.Controllers
             return NoContent();
         }
 
+        // PUT: Empleado/1
 	    [HttpPut("{id}")]
         public async Task<IActionResult> Put(int id, [Bind("Id, Nombre, ApellidoP, ApellidoM, Rfid")]Empleado empleado)
         {
