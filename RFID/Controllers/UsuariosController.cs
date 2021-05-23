@@ -46,7 +46,7 @@ namespace RFID.Controllers
 
             if (await context.Usuarios.Where(x => x.userName == usuario.userName).AnyAsync())
             {
-                return BadRequest(ErrorHelper.Response(400, "el usaurio {usuario.userName} ya existe."));
+                return BadRequest(ErrorHelper.Response(400, "El usaurio ya existe, pruebe otro."));
             }
 
             HashedPassword Password = HashHelper.Hash(usuario.password);
