@@ -30,10 +30,13 @@ namespace RFID
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+	    // se establece un contexto de base de datos para la conexion con esta (El connection string se encuentra guardado en el archivo appsettings.json)
             services.AddDbContext<RFIDContext>(options => options.UseSqlServer(Configuration.GetConnectionString("RFID")));
             
+	    // Se permitira las peticiones a todos los endpoints establecidos y su formato de vista
             services.AddControllersWithViews();
-
+	    
+	    // se establecen las politicas cors
             services.AddCors(options =>
             {
                 options.AddPolicy(name: _Cors, builder =>
@@ -44,7 +47,8 @@ namespace RFID
                         .AllowAnyMethod();
                 });
             });
-            // In production, the Angular files will be served from this directory
+
+	    // Se establecen las politicas de authenticacion 
             var key = Encoding.ASCII.GetBytes(Configuration.GetValue<string>("SecretKey"));
             services.AddAuthentication(x =>
             {
@@ -63,8 +67,7 @@ namespace RFID
                 };
             });
 
-            services.AddHttpContextAccessor();
-
+	    // se establece que en nuestra solucion, vamos a establecer los mensajes de error manualmente
             services.Configure<ApiBehaviorOptions>(options =>
             {
                 options.SuppressModelStateInvalidFilter = true;
@@ -83,7 +86,6 @@ namespace RFID
             else
             {
                 app.UseExceptionHandler("/Error");
-                // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
                 app.UseHsts();
             }
 
@@ -101,20 +103,6 @@ namespace RFID
                 endpoints.MapControllers();
             });
 
-
-            //app.UseSpa(spa =>
-            //{
-                // To learn more about options for serving an Angular SPA from ASP.NET Core,
-                // see https://go.microsoft.com/fwlink/?linkid=864501
-
-            //    spa.Options.SourcePath = "ClientApp";
-
-              //  if (env.IsDevelopment())
-                //{
-                    //spa.UseAngularCliServer(npmScript: "start");
-                  //  spa.UseProxyToSpaDevelopmentServer("http://localhost:4200");
-                //}
-            //});
         }
     }
 }

@@ -10,7 +10,7 @@ namespace RFID.Helper
 {
     public class HashHelper
     {
-        public static HashedPassword Hash(string password)
+        public static HashedPassword Hash(string password)  // Genera a partir de una contraseña dada de un usuario, su version encriptada junto a una sal
         {
             byte[] salt = new byte[128 / 8];
             using(var rng = RandomNumberGenerator.Create())
@@ -27,7 +27,7 @@ namespace RFID.Helper
             return new HashedPassword() { Password = hashed, Salt = Convert.ToBase64String(salt) };
         }
 
-        public static bool CheckHash(string attemptedPassword, string hash, string salt)
+        public static bool CheckHash(string attemptedPassword, string hash, string salt)  // verifica a partir de una contraseña y una sal, que el token recibido sea correspondiente a esos datos
         {
             string hashed = Convert.ToBase64String(KeyDerivation.Pbkdf2(
                 password: attemptedPassword,
@@ -38,7 +38,7 @@ namespace RFID.Helper
             return hash == hashed;
         }
 
-        public static byte[] GetHash(string password, string salt)
+        public static byte[] GetHash(string password, string salt) // genera el token a partir de una contraseña y una sal
         {
             byte[] unhashedBytes = Encoding.Unicode.GetBytes(string.Concat(salt, password));
             SHA256Managed sha256 = new SHA256Managed();
