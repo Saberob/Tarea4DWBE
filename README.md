@@ -117,7 +117,7 @@ La API cuenta con 10 endpoints, las cuales son los siguientes:
 	**Ejemplo:**
 	![img_Endpoint_login](https://github.com/Saberob/Tarea4DWBE/blob/main/imgs/post_login.png)
 
-#### Empleado
+#### Empleados
 
 1. 	**Método HTTP del request:** GET 
 
@@ -135,7 +135,7 @@ La API cuenta con 10 endpoints, las cuales son los siguientes:
     ```json
     [
     	{
-        	"id": "ID_de_empleado",
+        	"id": 0000,
         	"nombre": "Nombre_de_empleado",
         	"apellidoP": "Primer_apellido_de_empleado",
         	"apellidoM": "Segundo_apellido_de_empleado"
@@ -164,16 +164,8 @@ La API cuenta con 10 endpoints, las cuales son los siguientes:
     	"RFID": "RFID_de_empleado"
 	}
     ```
-	**Response:**
-    ```json
-    {
-    	"Nombre": "Nombre_de_empleado",
-    	"ApellidoP": "Primer_apellido_de_empleado",
-    	"ApellidoM": "Segundo_apellido_de_empleado",
-    	"RFID": "RFID_de_empleado",
-    	"ingresos": []
-	}
-    ```
+	**Response:** N/A.
+
 	**Ejemplo:**
 	![img_Endpoint_POST_empleado](https://github.com/Saberob/Tarea4DWBE/blob/main/imgs/post_empleado_created.png)
 
@@ -190,10 +182,11 @@ La API cuenta con 10 endpoints, las cuales son los siguientes:
 	**Estructura del body:**
     ```json
     {
+    	"empleadoId": 000,
     	"Nombre": "Nombre_de_empleado",
     	"ApellidoP": "Primer_apellido_de_empleado",
     	"ApellidoM": "Segundo_apellido_de_empleado",
-    	"RFID": "RFID_de_empleado"
+    	"Rfid": "RFID_de_empleado"
 	}
     ```
 	**Response:** N/A.
@@ -217,6 +210,101 @@ La API cuenta con 10 endpoints, las cuales son los siguientes:
     
 	**Ejemplo:**
 	![img_Endpoint_DELETE_empleado](https://github.com/Saberob/Tarea4DWBE/blob/main/imgs/delete_empleado_autorizacion_eliminar.png)
+
+#### Ingresos:
+
+1. 	**Método HTTP del request:** GET 
+
+	**Descripción:** ya dentro de la aplicación, permite traer los registros de los ingresos guardados en la base de datos.
+
+	**URL:** `https://localhost:5001/api/ingresos`
+
+	**Parámetros de la URL:** N/A.
+
+	**Autorización:** requerida, token generado en login.
+
+	**Estructura del body:** N/A.
+    
+	**Response:** una lista con la información de los ingresos registrados.
+    ```json
+    [
+    	{
+        	"registroId": 0000,
+        	"nombre": "Nombre_de_empleado",
+        	"fecha": "fecha_de_registro",
+        	"hora": "hora_de_registro"
+    	}
+    ]
+    ```
+	**Ejemplo:**
+	![img_Endpoint_GET_ingresos](https://github.com/Saberob/Tarea4DWBE/blob/main/imgs/get_ingreso_autorizacion_consulta.png)
+
+2. 	**Método HTTP del request:** POST
+
+	**Descripción:** ya dentro de la aplicación, permite ingresar un nuevo ingreso a la base de datos.
+
+	**URL:** `https://localhost:5001/api/ingresos`
+
+	**Parámetros de la URL:** N/A.
+
+	**Autorización:** requerida, token generado en login.
+
+	**Estructura del body:**
+    ```json
+    {
+    	"EmpleadoId": 0000
+	}
+    ```
+	**Response:** N/A.
+
+	**Ejemplo:**
+	![img_Endpoint_POST_ingreso](https://github.com/Saberob/Tarea4DWBE/blob/main/imgs/post_empleado_created.png)
+
+3. 	**Método HTTP del request:** PUT
+
+	**Descripción:** ya dentro de la aplicación, permite actualizar la información de un ingreso ya existente en la base de datos.
+
+	**URL:** `https://localhost:5001/api/ingresos`
+
+	**Parámetros de la URL:** N/A.
+
+	**Autorización:** requerida, token generado en login.
+
+	**Estructura del body:**
+    ```json
+    {
+    	"RegistroId": 0000,
+    	"EmpleadoId": 0000,
+	    "day": 00,
+	    "month": 00,
+    	"year": 0000,
+    	"hours": 00,
+    	"minutes": 00,
+    	"seconds": 00
+	}
+    ```
+	**Response:** N/A.
+    
+	**Ejemplo:**
+	![img_Endpoint_PUT_ingreso](https://github.com/Saberob/Tarea4DWBE/blob/main/imgs/put_ingreso_update.png)
+
+4. 	**Método HTTP del request:** DELETE
+
+	**Descripción:** ya dentro de la aplicación, permite borrar la información de un ingreso ya existente en la base de datos.
+
+	**URL:** `https://localhost:5001/api/ingresos/{id}`
+
+	**Parámetros de la URL:** ID de empleado.
+
+	**Autorización:** requerida, token generado en login.
+
+	**Estructura del body:** N/A.
+	
+	**Response:** N/A.
+    
+	**Ejemplo:**
+	![img_Endpoint_DELETE_ingreso](https://github.com/Saberob/Tarea4DWBE/blob/main/imgs/delete_ingreso_autorizacion_eliminar.png)
+
 
 ## Desarrolladores :hammer:
 * ***Alberto Natanael Sánchez Robles***... ... ... ... ... ... ... ... ...*1861608*
