@@ -65,7 +65,6 @@ Sí se tiene descargado Postman, por medio de este programa podremos importar el
 La API cuenta con 10 endpoints, las cuales son los siguientes:
 
 #### USUARIO
-Esta entidad cuenta sólo con un endpoint el cual es el siguiente:
 
 1.	**Método HTTP del request:** POST 
 
@@ -88,7 +87,7 @@ Esta entidad cuenta sólo con un endpoint el cual es el siguiente:
 	**Response:** N/A.
 
 	**Ejemplo:**
-![img_Endpoint_usuario](https://github.com/Saberob/Tarea4DWBE/blob/main/imgs/post_usuario.png)
+	![img_Endpoint_usuario](https://github.com/Saberob/Tarea4DWBE/blob/main/imgs/post_usuario.png)
 
 #### LOGIN
 
@@ -116,9 +115,108 @@ Esta entidad cuenta sólo con un endpoint el cual es el siguiente:
     }
     ```
 	**Ejemplo:**
-![img_Endpoint_login](https://github.com/Saberob/Tarea4DWBE/blob/main/imgs/post_login.png)
+	![img_Endpoint_login](https://github.com/Saberob/Tarea4DWBE/blob/main/imgs/post_login.png)
 
+#### Empleado
 
+1. 	**Método HTTP del request:** GET 
+
+	**Descripción:** ya dentro de la aplicación, permite traer los registros de los empleados guardados en la base de datos.
+
+	**URL:** `https://localhost:5001/api/empleado`
+
+	**Parámetros de la URL:** N/A.
+
+	**Autorización:** requerida, token generado en login.
+
+	**Estructura del body:** N/A.
+    
+	**Response:** una lista con la información de los empleados registrados.
+    ```json
+    [
+    	{
+        	"id": "ID_de_empleado",
+        	"nombre": "Nombre_de_empleado",
+        	"apellidoP": "Primer_apellido_de_empleado",
+        	"apellidoM": "Segundo_apellido_de_empleado"
+    	}
+    ]
+    ```
+	**Ejemplo:**
+	![img_Endpoint_GET_empleado](https://github.com/Saberob/Tarea4DWBE/blob/main/imgs/get_empleado_autorizacion_consulta.png)
+
+2. 	**Método HTTP del request:** POST
+
+	**Descripción:** ya dentro de la aplicación, permite ingresar un nuevo empleado a la base de datos.
+
+	**URL:** `https://localhost:5001/api/empleado`
+
+	**Parámetros de la URL:** N/A.
+
+	**Autorización:** requerida, token generado en login.
+
+	**Estructura del body:**
+    ```json
+    {
+    	"Nombre": "Nombre_de_empleado",
+    	"ApellidoP": "Primer_apellido_de_empleado",
+    	"ApellidoM": "Segundo_apellido_de_empleado",
+    	"RFID": "RFID_de_empleado"
+	}
+    ```
+	**Response:**
+    ```json
+    {
+    	"Nombre": "Nombre_de_empleado",
+    	"ApellidoP": "Primer_apellido_de_empleado",
+    	"ApellidoM": "Segundo_apellido_de_empleado",
+    	"RFID": "RFID_de_empleado",
+    	"ingresos": []
+	}
+    ```
+	**Ejemplo:**
+	![img_Endpoint_POST_empleado](https://github.com/Saberob/Tarea4DWBE/blob/main/imgs/post_empleado_created.png)
+
+3. 	**Método HTTP del request:** PUT
+
+	**Descripción:** ya dentro de la aplicación, permite actualizar la información de un empleado ya existente en la base de datos.
+
+	**URL:** `https://localhost:5001/api/empleado/{id}`
+
+	**Parámetros de la URL:** ID de empleado.
+
+	**Autorización:** requerida, token generado en login.
+
+	**Estructura del body:**
+    ```json
+    {
+    	"Nombre": "Nombre_de_empleado",
+    	"ApellidoP": "Primer_apellido_de_empleado",
+    	"ApellidoM": "Segundo_apellido_de_empleado",
+    	"RFID": "RFID_de_empleado"
+	}
+    ```
+	**Response:** N/A.
+    
+	**Ejemplo:**
+	![img_Endpoint_PUT_empleado](https://github.com/Saberob/Tarea4DWBE/blob/main/imgs/put_empleado_update.png)
+
+4. 	**Método HTTP del request:** DELETE
+
+	**Descripción:** ya dentro de la aplicación, permite borrar la información de un empleado ya existente en la base de datos.
+
+	**URL:** `https://localhost:5001/api/empleado/{id}`
+
+	**Parámetros de la URL:** ID de empleado.
+
+	**Autorización:** requerida, token generado en login.
+
+	**Estructura del body:** N/A.
+	
+	**Response:** N/A.
+    
+	**Ejemplo:**
+	![img_Endpoint_DELETE_empleado](https://github.com/Saberob/Tarea4DWBE/blob/main/imgs/delete_empleado_autorizacion_eliminar.png)
 
 ## Desarrolladores :hammer:
 * ***Alberto Natanael Sánchez Robles***... ... ... ... ... ... ... ... ...*1861608*
