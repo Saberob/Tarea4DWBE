@@ -61,7 +61,63 @@ Sí la aplicación está funcionando correctamente, debería de emerger una nuev
 
 ## Endpoints :envelope: :page_facing_up:
 Sí se tiene descargado Postman, por medio de este programa podremos importar el archivo "PIADWBE.postman_collection.json", el cual contiene una colección de todos los endpoints de la API.
+
 La API cuenta con 10 endpoints, las cuales son los siguientes:
+
+#### USUARIO
+Esta entidad cuenta sólo con un endpoint el cual es el siguiente:
+
+1.	**Método HTTP del request:** POST 
+
+	**Descripción:** permite crear una cuenta con la cual poder acceder a la aplicación.
+
+	**URL:** `https://localhost:5001/api/usuarios`
+
+	**Parámetros de la URL:** N/A.
+
+	**Autorización:** N/A.
+
+	**Estructura del body:**
+    ```json
+    {
+        "UserName": "Nombre_de_usuario",
+        "password": "Contraseña",
+        "confirmPassword": "Contraseña"
+    }
+    ```   
+	**Response:** N/A.
+
+	**Ejemplo:**
+![img_Endpoint_usuario](https://github.com/Saberob/Tarea4DWBE/blob/main/imgs/post_usuario.png)
+
+#### LOGIN
+
+1. 	**Método HTTP del request:** POST 
+
+	**Descripción:** dado el usuario y contraseña, sí estos son correctos nos devuelve un token que nos servirá para validar nuestro ingreso a la aplicación.
+
+	**URL:** `https://localhost:5001/api/login`
+
+	**Parámetros de la URL:** N/A.
+
+	**Autorización:** N/A.
+
+	**Estructura del body:**
+    ```json
+    {
+        "UserName": "Usuario",
+        "password": "Contraseña"
+    }
+    ```
+	**Response:**
+    ```json
+    {
+        "token": "TOKEN"
+    }
+    ```
+	**Ejemplo:**
+![img_Endpoint_login](https://github.com/Saberob/Tarea4DWBE/blob/main/imgs/post_login.png)
+
 
 
 ## Desarrolladores :hammer:
