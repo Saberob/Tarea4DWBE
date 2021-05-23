@@ -1,6 +1,6 @@
 {
 	"info": {
-		"_postman_id": "1558f4da-2cb1-49fe-924a-17f9aeb2e62c",
+		"_postman_id": "182029de-8e4d-4cfa-9897-d1641ed4e3a1",
 		"name": "PIADWBE",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
 	},
@@ -44,7 +44,7 @@
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "{\r\n    \"Nombre\": \"Alberto\",\r\n    \"ApellidoP\": \"Sanchez\",\r\n    \"ApellidoM\": \"Robles\",\r\n    \"RFID\": \"DWBE1861608\"\r\n}",
+					"raw": "{\r\n    \"Nombre\": \"Jimena\",\r\n    \"ApellidoP\": \"Nuñez\",\r\n    \"ApellidoM\": \"López\",\r\n    \"RFID\": \"DWBE1868689\"\r\n}",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -52,7 +52,7 @@
 					}
 				},
 				"url": {
-					"raw": "https://localhost:5001/api/empleadoes",
+					"raw": "https://localhost:5001/api/empleado",
 					"protocol": "https",
 					"host": [
 						"localhost"
@@ -60,7 +60,7 @@
 					"port": "5001",
 					"path": [
 						"api",
-						"empleadoes"
+						"empleado"
 					]
 				},
 				"description": "Insertar empleado en la base de datos"
@@ -73,7 +73,7 @@
 				"method": "DELETE",
 				"header": [],
 				"url": {
-					"raw": "https://localhost:5001/api/empleado/22",
+					"raw": "https://localhost:5001/api/empleado/11",
 					"protocol": "https",
 					"host": [
 						"localhost"
@@ -82,7 +82,7 @@
 					"path": [
 						"api",
 						"empleado",
-						"22"
+						"11"
 					]
 				},
 				"description": "Insertar empleado en la base de datos"
@@ -96,7 +96,7 @@
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "{\r\n    \"Id\": 32,\r\n    \"Nombre\": \"Alberto Natanael\",\r\n    \"ApellidoP\": \"Sanchez\",\r\n    \"ApellidoM\": \"Robles\",\r\n    \"Rfid\": \"DWBE1861608\"\r\n}",
+					"raw": "{\r\n    \"Id\": 11,\r\n    \"Nombre\": \"Jimena\",\r\n    \"ApellidoP\": \"Pérez\",\r\n    \"ApellidoM\": \"López\",\r\n    \"Rfid\": \"DWBE4539087\"\r\n}",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -104,7 +104,7 @@
 					}
 				},
 				"url": {
-					"raw": "https://localhost:5001/api/empleado/32",
+					"raw": "https://localhost:5001/api/empleado/11",
 					"protocol": "https",
 					"host": [
 						"localhost"
@@ -113,7 +113,7 @@
 					"path": [
 						"api",
 						"empleado",
-						"32"
+						"11"
 					]
 				},
 				"description": "Insertar empleado en la base de datos"
@@ -176,17 +176,8 @@
 			"request": {
 				"method": "DELETE",
 				"header": [],
-				"body": {
-					"mode": "raw",
-					"raw": "{\r\n    \"Nombre\": \"Alberto\",\r\n    \"ApellidoP\": \"Sanchez\",\r\n    \"ApellidoM\": \"Robles\",\r\n    \"RFID\": \"DWBE1861608\"\r\n}",
-					"options": {
-						"raw": {
-							"language": "json"
-						}
-					}
-				},
 				"url": {
-					"raw": "https://localhost:5001/api/ingresos/29",
+					"raw": "https://localhost:5001/api/ingresos/21",
 					"protocol": "https",
 					"host": [
 						"localhost"
@@ -195,7 +186,7 @@
 					"path": [
 						"api",
 						"ingresos",
-						"29"
+						"21"
 					]
 				},
 				"description": "Insertar empleado en la base de datos"
@@ -209,7 +200,7 @@
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "{\r\n    \"RegistroId\": 1,\r\n    \"EmpleadoId\": 1,\r\n    \"day\": 25,\r\n    \"month\": 5,\r\n    \"year\": 2021,\r\n    \"hours\": 23,\r\n    \"minutes\": 59,\r\n    \"seconds\": 59\r\n}",
+					"raw": "{\r\n    \"RegistroId\": 21,\r\n    \"EmpleadoId\": 3,\r\n    \"day\": 23,\r\n    \"month\": 5,\r\n    \"year\": 2021,\r\n    \"hours\": 23,\r\n    \"minutes\": 59,\r\n    \"seconds\": 59\r\n}",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -239,7 +230,7 @@
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "{\r\n    \"UserName\": \"aal\",\r\n    \"password\": \"admin\",\r\n    \"confirmPassword\": \"admin\"\r\n}",
+					"raw": "{\r\n    \"UserName\": \"Ts-019\",\r\n    \"password\": \"dimelo_FVa89\",\r\n    \"confirmPassword\": \"dimelo_FVa89\"\r\n}",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -275,7 +266,7 @@
 				],
 				"body": {
 					"mode": "raw",
-					"raw": "{\r\n    \"UserName\": \"aal\",\r\n    \"password\": \"admin\"\r\n}",
+					"raw": "{\r\n    \"UserName\": \"Ts-019\",\r\n    \"password\": \"dimelo_FVa89\"\r\n}",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -304,7 +295,7 @@
 		"bearer": [
 			{
 				"key": "token",
-				"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1laWQiOiJBbGJlcnRvIiwibmJmIjoxNjIxNzEwNjk2LCJleHAiOjE2MjE3MjUwOTYsImlhdCI6MTYyMTcxMDY5Nn0.lHrE3OjQYtV_tOe8PLZW_oKv0ypoh7DESQsTcan_u1U",
+				"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1laWQiOiJBbGJlcnRvIiwibmJmIjoxNjIxNzYxOTkzLCJleHAiOjE2MjE3NzYzOTMsImlhdCI6MTYyMTc2MTk5M30.2Y549z67C9cZf-TMlksoK5KCzS8BGVXRZQIudK5uXHI",
 				"type": "string"
 			}
 		]
