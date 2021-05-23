@@ -6,9 +6,9 @@ using System.Threading.Tasks;
 
 namespace RFID.Helper
 {
-    public class ErrorHelper
+    public class ErrorHelper		// se establecer los mensajes de error para mostrar mas claramente los errores posibles en las peticiones
     {
-        public static ResponseObject Response(int StatusCode, string Message)
+        public static ResponseObject Response(int StatusCode, string Message) // errores relacionados con los propios datos
         {
             return new ResponseObject()
             {
@@ -18,7 +18,7 @@ namespace RFID.Helper
             };
 
         }
-        public static List<ModelErrors> GetModelStateErrors(ModelStateDictionary Model)
+        public static List<ModelErrors> GetModelStateErrors(ModelStateDictionary Model)  // errores relacionados con el modleo
         {
             return Model.Select(x => new ModelErrors()
             {
