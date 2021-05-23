@@ -8,7 +8,7 @@ El proyecto fue construido empleando:
 - Angular v12.0.1
 
 ## Descarga :inbox_tray:
-Para poder descargar el proyecto es necesario tener instalado [Git](https://git-scm.com/downloads), abrir la consola en la carpeta donde se quiera descargar el proyecto y emplear el siguiete comando en la consola:
+Para poder descargar el proyecto es necesario tener instalado [Git](https://git-scm.com/downloads), abrir la consola en la carpeta donde se quiera descargar el proyecto y emplear el siguiente comando en git bash:
 ```sh
 git clone https://github.com/Saberob/Tarea4DWBE.git
 ```
@@ -22,16 +22,14 @@ Es muy recomendable tener instalados las siguientes herramientas para poder ejec
 - [Angular CLI](https://angular.io/guide/setup-local#install-the-angular-cli)
 
 ## Ejecución del servidor :arrows_counterclockwise: :globe_with_meridians:
-Teniendo ya instalados los programas anteriores, y hecho clone al proyecto, tendremos que realizar los siguientes pasos:
+Teniendo ya instalados los programas anteriores, y hecho clone al proyecto, realizar los siguientes pasos:
 
 1. Abrir el archivo "SQLQuery1.sql" en SQL Server Management Studio (SSMS) y ejecutarlo para que se genere la base de datos. Se recomienda ejecutar el query por partes.
-2. Hecho lo anterior, ingresamos a la carpeta RFID y abrimos ahí mismo.
-3. Ya abierta la consola, con la dirección de la carpeta RFID, ejecutamos el siguiente comando:
+2. Hecho lo anterior, ingresar a la carpeta RFID y abrir ahí mismo consola.
+3. Ya abierta la consola, con la dirección de la carpeta RFID, ejecutar el siguiente comando:
     ```sh
     dotnet run
     ```
-
-**Nota:** asegurese que la base de datos esté conectada.
 
 **Nota:** para detener el servidor oprima las teclas `Ctrl` + `C`.
 
@@ -39,10 +37,10 @@ Sí el servidor está funcionando correctamente, debería de escribirse en conso
 ![img_servidor](https://github.com/Saberob/Tarea4DWBE/blob/main/imgs/servidor_funcionando.png)
 
 ## Ejecución de la aplicación :arrows_counterclockwise: :iphone:
-Teniendo ya instalados los programas de la sección de requisitos, y hecho clone al proyecto, tendremos que realizar los siguientes pasos:
+Teniendo ya instalados los programas de la sección de requisitos, y hecho clone al proyecto, realizar los siguientes pasos:
 
-1. Abrir en Visual Studio Code (VSC) toda la carpeta de "ClientApp".
-2. Ejecutar, en consola cmd o bash los siguientes comandos para descargar los modulos necesarios para la ejecución de la aplicación (la consola debe de indicar la dirección de la carpeta ClientApp):
+1. Ir a la carpeta ClientApp y abrir ahí mismo consola.
+2. Ya abierta la consola, con la dirección de la carpeta ClientApp, ejecutar los siguientes comandos para descargar los modulos necesarios para la ejecución de la aplicación:
     ```sh
     npm i -g npm-check-updates
     ncu -u
