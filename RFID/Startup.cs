@@ -41,8 +41,7 @@ namespace RFID
             {
                 options.AddPolicy(name: _Cors, builder =>
                 {
-                    builder.SetIsOriginAllowedToAllowWildcardSubdomains()
-                        .AllowAnyOrigin()
+                    builder.WithOrigins("http://localhost:4200")
                         .AllowAnyHeader()
                         .AllowAnyMethod();
                 });
